@@ -1,6 +1,7 @@
 import arxiv
 import argparse
 import os
+import time
 import sys
 from dotenv import load_dotenv
 load_dotenv(override=True)
@@ -61,6 +62,7 @@ def get_arxiv_paper(query:str, debug:bool=False) -> list[ArxivPaper]:
             bar.update(len(batch))
             papers.extend(batch)
         bar.close()
+        time.sleep(10) # 在每批次请求后，手动等待10秒钟
 
     else:
         logger.debug("Retrieve 5 arxiv papers regardless of the date.")
