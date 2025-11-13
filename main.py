@@ -58,11 +58,11 @@ def get_arxiv_paper(query:str, debug:bool=False) -> list[ArxivPaper]:
         bar = tqdm(total=len(all_paper_ids),desc="Retrieving Arxiv papers")
         for i in range(0,len(all_paper_ids),50):
             search = arxiv.Search(id_list=all_paper_ids[i:i+50])
+            time.sleep(10) # 在每次API请求前，都主动等待10秒
             batch = [ArxivPaper(p) for p in client.results(search)]
             bar.update(len(batch))
             papers.extend(batch)
         bar.close()
-        time.sleep(10) # 在每批次请求后，手动等待10秒钟
 
     else:
         logger.debug("Retrieve 5 arxiv papers regardless of the date.")
