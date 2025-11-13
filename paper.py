@@ -66,6 +66,11 @@ class ArxivPaper:
     def tex(self) -> dict[str,str]:
         with ExitStack() as stack:
             tmpdirname = stack.enter_context(TemporaryDirectory())
+            # --- 在这里添加3行修复代码 ---
+            if not self._paper.pdf_url:
+                logger.debug(f"Skipping source download for {self._paper.arxiv_id}: No pdf_url found.")
+                return None
+            # --- 修复结束 ---
             file = self._paper.download_source(dirpath=tmpdirname)
             try:
                 tar = stack.enter_context(tarfile.open(file))
