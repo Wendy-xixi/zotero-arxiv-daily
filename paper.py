@@ -68,7 +68,7 @@ class ArxivPaper:
             tmpdirname = stack.enter_context(TemporaryDirectory())
             # --- 在这里添加3行修复代码 ---
             if not self._paper.pdf_url:
-                logger.debug(f"Skipping source download for {self._paper.arxiv_id}: No pdf_url found.")
+                logger.debug(f"Skipping source download for {self._paper.get_short_id()}: No pdf_url found.")
                 return None
             # --- 修复结束 ---
             file = self._paper.download_source(dirpath=tmpdirname)
